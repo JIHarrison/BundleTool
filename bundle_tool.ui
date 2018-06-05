@@ -88,19 +88,6 @@
      <string>Cost of Baffles</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="baffle_cost_textbox">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>230</y>
-      <width>104</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="placeholderText">
-     <string>$ ####.##</string>
-    </property>
-   </widget>
    <widget class="QListView" name="configurator_listview_3">
     <property name="geometry">
      <rect>
@@ -123,19 +110,6 @@
     <property name="title">
      <string>Tube Options</string>
     </property>
-    <widget class="QTextEdit" name="total_tubing_textbox">
-     <property name="geometry">
-      <rect>
-       <x>240</x>
-       <y>30</y>
-       <width>111</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="placeholderText">
-      <string>#####</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="tube_OD_label">
      <property name="geometry">
       <rect>
@@ -241,6 +215,19 @@
       <string>Total Tubing (ft)</string>
      </property>
     </widget>
+    <widget class="QLineEdit" name="total_tubing_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>30</y>
+       <width>101</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>####</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
@@ -254,19 +241,6 @@
     <property name="title">
      <string>TubeSheet Options</string>
     </property>
-    <widget class="QTextEdit" name="tubesheet_diameter_textbox">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>90</y>
-       <width>151</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="placeholderText">
-      <string>tubesheet diameter</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="tubesheet_material_label">
      <property name="geometry">
       <rect>
@@ -340,14 +314,29 @@
       <string>TubeSheet Diameter</string>
      </property>
     </widget>
-    <zorder>tubesheet_diameter_textbox</zorder>
+    <widget class="QPlainTextEdit" name="tubesheet_diameter_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="placeholderText">
+      <string>#####</string>
+     </property>
+    </widget>
     <zorder>tubesheet_material_label</zorder>
     <zorder>tubesheet_combobox</zorder>
     <zorder>tubesheet_diameter_label</zorder>
-    <zorder>tubesheet_diameter_textbox</zorder>
     <zorder>tubesheet_material_label</zorder>
     <zorder>tubesheet_combobox</zorder>
     <zorder>tubesheet_diameter_label</zorder>
+    <zorder>tubesheet_diameter_lineEdit</zorder>
    </widget>
    <widget class="QLineEdit" name="baffle_number_lineEdit">
     <property name="geometry">
@@ -360,6 +349,45 @@
     </property>
     <property name="inputMask">
      <string/>
+    </property>
+    <property name="placeholderText">
+     <string>####</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>330</y>
+      <width>256</width>
+      <height>192</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="baffle_cost_lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>230</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>$ ####.##</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>500</y>
+      <width>131</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Configuration:</string>
     </property>
    </widget>
   </widget>
@@ -393,23 +421,15 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>tubesheet_combobox</tabstop>
+  <tabstop>tube_material_combobox</tabstop>
+  <tabstop>tube_OD_combobox</tabstop>
+  <tabstop>baffle_number_lineEdit</tabstop>
+  <tabstop>configurator_listview</tabstop>
+  <tabstop>configurator_listview_2</tabstop>
+  <tabstop>configurator_listview_3</tabstop>
+ </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>baffle_number_lineEdit</sender>
-   <signal>returnPressed()</signal>
-   <receiver>configurator_listview</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>76</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>497</x>
-     <y>156</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
