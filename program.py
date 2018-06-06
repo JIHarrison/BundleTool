@@ -107,13 +107,20 @@ class Ui_MainWindow(object):
         self.tubesheet_diameter_lineEdit.setGeometry(QtCore.QRect(20, 90, 121, 21))
         self.tubesheet_diameter_lineEdit.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.tubesheet_diameter_lineEdit.setObjectName("tubesheet_diameter_lineEdit")
+
+        # TODO Get text from QlineEdits to save to textfile for TextBrowser to display
         self.baffle_number_lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.baffle_number_lineEdit.setGeometry(QtCore.QRect(20, 230, 113, 20))
         self.baffle_number_lineEdit.setInputMask("")
         self.baffle_number_lineEdit.setObjectName("baffle_number_lineEdit")
+        baffle_number = self.baffle_number_lineEdit.text()
+
+
         self.baffle_cost_lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.baffle_cost_lineEdit.setGeometry(QtCore.QRect(170, 230, 113, 20))
         self.baffle_cost_lineEdit.setObjectName("baffle_cost_lineEdit")
+
+
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(370, 500, 131, 20))
         self.label.setObjectName("label")
@@ -188,10 +195,21 @@ class Ui_MainWindow(object):
         # connecting PushBotton action "clicked" to PushButton_add
         self.pushButton.clicked.connect(on_click)
 
+#TODO: connecting lineEdits to Return/EnterPress signals
+        #self.baffle_number_lineEdit.returnPressed.connect(get_number_baffles())
+        #self.baffle_cost_lineEdit.connect(enterPress)
+
+    def calculate_baffle_cost(self):
+        pass
+
+    def get_baffles_cost():
+        pass
 
 @pyqtSlot()
 def on_click(self):
-    print('woo')
+    woo = open(".\\text_browser1.txt", 'a')
+    woo.write("test")
+    woo.close()
 
 
 def pushButton_add():

@@ -330,13 +330,6 @@
       <string>#####</string>
      </property>
     </widget>
-    <zorder>tubesheet_material_label</zorder>
-    <zorder>tubesheet_combobox</zorder>
-    <zorder>tubesheet_diameter_label</zorder>
-    <zorder>tubesheet_material_label</zorder>
-    <zorder>tubesheet_combobox</zorder>
-    <zorder>tubesheet_diameter_label</zorder>
-    <zorder>tubesheet_diameter_lineEdit</zorder>
    </widget>
    <widget class="QLineEdit" name="baffle_number_lineEdit">
     <property name="geometry">
@@ -352,16 +345,6 @@
     </property>
     <property name="placeholderText">
      <string>####</string>
-    </property>
-   </widget>
-   <widget class="QTextBrowser" name="textBrowser">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>330</y>
-      <width>256</width>
-      <height>192</height>
-     </rect>
     </property>
    </widget>
    <widget class="QLineEdit" name="baffle_cost_lineEdit">
@@ -388,6 +371,32 @@
     </property>
     <property name="text">
      <string>Configuration:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>230</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add Baffles</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>330</y>
+      <width>256</width>
+      <height>192</height>
+     </rect>
     </property>
    </widget>
   </widget>
