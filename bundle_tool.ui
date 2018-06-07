@@ -58,6 +58,9 @@
     <property name="text">
      <string>Number of Baffles</string>
     </property>
+    <property name="buddy">
+     <cstring>baffle_number_combobox</cstring>
+    </property>
    </widget>
    <widget class="QListView" name="configurator_listview_2">
     <property name="geometry">
@@ -86,6 +89,9 @@
     </property>
     <property name="text">
      <string>Cost of Baffles</string>
+    </property>
+    <property name="buddy">
+     <cstring>baffle_cost_lineEdit</cstring>
     </property>
    </widget>
    <widget class="QListView" name="configurator_listview_3">
@@ -128,6 +134,9 @@
      <property name="text">
       <string>Tube OD</string>
      </property>
+     <property name="buddy">
+      <cstring>tube_OD_combobox</cstring>
+     </property>
     </widget>
     <widget class="QLabel" name="tube_material_label">
      <property name="geometry">
@@ -146,6 +155,9 @@
      </property>
      <property name="text">
       <string>Tube Material</string>
+     </property>
+     <property name="buddy">
+      <cstring>tube_material_combobox</cstring>
      </property>
     </widget>
     <widget class="QComboBox" name="tube_OD_combobox">
@@ -214,6 +226,9 @@
      <property name="text">
       <string>Total Tubing (ft)</string>
      </property>
+     <property name="buddy">
+      <cstring>total_tubing_lineEdit</cstring>
+     </property>
     </widget>
     <widget class="QLineEdit" name="total_tubing_lineEdit">
      <property name="geometry">
@@ -258,6 +273,9 @@
      </property>
      <property name="text">
       <string>TubeSheet Material</string>
+     </property>
+     <property name="buddy">
+      <cstring>tubesheet_combobox</cstring>
      </property>
     </widget>
     <widget class="QComboBox" name="tubesheet_combobox">
@@ -313,39 +331,75 @@
      <property name="text">
       <string>TubeSheet Diameter</string>
      </property>
+     <property name="buddy">
+      <cstring>tubesheet_diameter_combobox</cstring>
+     </property>
     </widget>
-    <widget class="QPlainTextEdit" name="tubesheet_diameter_lineEdit">
+    <widget class="QComboBox" name="tubesheet_diameter_combobox">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>30</x>
        <y>90</y>
-       <width>121</width>
-       <height>21</height>
+       <width>91</width>
+       <height>22</height>
       </rect>
      </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="placeholderText">
-      <string>#####</string>
-     </property>
+     <item>
+      <property name="text">
+       <string>5&quot;</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>6&quot;</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>8&quot;</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>10&quot;</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>12&quot;</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>14&quot;</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>16&quot;</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>18&quot;</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>20&quot;</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>22&quot;</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>24&quot;</string>
+      </property>
+     </item>
     </widget>
-   </widget>
-   <widget class="QLineEdit" name="baffle_number_lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>230</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="inputMask">
-     <string/>
-    </property>
-    <property name="placeholderText">
-     <string>####</string>
-    </property>
    </widget>
    <widget class="QLineEdit" name="baffle_cost_lineEdit">
     <property name="geometry">
@@ -372,6 +426,9 @@
     <property name="text">
      <string>Configuration:</string>
     </property>
+    <property name="buddy">
+     <cstring>configurator_listview_3</cstring>
+    </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
@@ -397,6 +454,79 @@
       <width>256</width>
       <height>192</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="baffle_number_combobox">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>230</y>
+      <width>81</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>3</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>5</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>6</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>7</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>8</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>9</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>10</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QListView" name="test_listview">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>270</y>
+      <width>256</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
    </widget>
   </widget>
@@ -432,9 +562,14 @@
  </widget>
  <tabstops>
   <tabstop>tubesheet_combobox</tabstop>
+  <tabstop>tubesheet_diameter_combobox</tabstop>
   <tabstop>tube_material_combobox</tabstop>
   <tabstop>tube_OD_combobox</tabstop>
-  <tabstop>baffle_number_lineEdit</tabstop>
+  <tabstop>total_tubing_lineEdit</tabstop>
+  <tabstop>baffle_number_combobox</tabstop>
+  <tabstop>baffle_cost_lineEdit</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>textBrowser</tabstop>
   <tabstop>configurator_listview</tabstop>
   <tabstop>configurator_listview_2</tabstop>
   <tabstop>configurator_listview_3</tabstop>

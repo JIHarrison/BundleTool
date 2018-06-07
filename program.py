@@ -3,6 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import pyqtSlot
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -103,24 +104,23 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.tubesheet_diameter_label.setFont(font)
         self.tubesheet_diameter_label.setObjectName("tubesheet_diameter_label")
-        self.tubesheet_diameter_lineEdit = QtWidgets.QPlainTextEdit(self.groupBox)
-        self.tubesheet_diameter_lineEdit.setGeometry(QtCore.QRect(20, 90, 121, 21))
-        self.tubesheet_diameter_lineEdit.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.tubesheet_diameter_lineEdit.setObjectName("tubesheet_diameter_lineEdit")
-
-        # TODO Get text from QlineEdits to save to textfile for TextBrowser to display
-        self.baffle_number_lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.baffle_number_lineEdit.setGeometry(QtCore.QRect(20, 230, 113, 20))
-        self.baffle_number_lineEdit.setInputMask("")
-        self.baffle_number_lineEdit.setObjectName("baffle_number_lineEdit")
-        baffle_number = self.baffle_number_lineEdit.text()
-
-
+        self.tubesheet_diameter_combobox = QtWidgets.QComboBox(self.groupBox)
+        self.tubesheet_diameter_combobox.setGeometry(QtCore.QRect(30, 90, 91, 22))
+        self.tubesheet_diameter_combobox.setObjectName("tubesheet_diameter_combobox")
+        self.tubesheet_diameter_combobox.addItem("")
+        self.tubesheet_diameter_combobox.addItem("")
+        self.tubesheet_diameter_combobox.addItem("")
+        self.tubesheet_diameter_combobox.addItem("")
+        self.tubesheet_diameter_combobox.addItem("")
+        self.tubesheet_diameter_combobox.addItem("")
+        self.tubesheet_diameter_combobox.addItem("")
+        self.tubesheet_diameter_combobox.addItem("")
+        self.tubesheet_diameter_combobox.addItem("")
+        self.tubesheet_diameter_combobox.addItem("")
+        self.tubesheet_diameter_combobox.addItem("")
         self.baffle_cost_lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.baffle_cost_lineEdit.setGeometry(QtCore.QRect(170, 230, 113, 20))
         self.baffle_cost_lineEdit.setObjectName("baffle_cost_lineEdit")
-
-
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(370, 500, 131, 20))
         self.label.setObjectName("label")
@@ -131,6 +131,23 @@ class Ui_MainWindow(object):
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
         self.textBrowser.setGeometry(QtCore.QRect(30, 330, 256, 192))
         self.textBrowser.setObjectName("textBrowser")
+        self.baffle_number_combobox = QtWidgets.QComboBox(self.centralwidget)
+        self.baffle_number_combobox.setGeometry(QtCore.QRect(30, 230, 81, 22))
+        self.baffle_number_combobox.setObjectName("baffle_number_combobox")
+        self.baffle_number_combobox.addItem("")
+        self.baffle_number_combobox.addItem("")
+        self.baffle_number_combobox.addItem("")
+        self.baffle_number_combobox.addItem("")
+        self.baffle_number_combobox.addItem("")
+        self.baffle_number_combobox.addItem("")
+        self.baffle_number_combobox.addItem("")
+        self.baffle_number_combobox.addItem("")
+        self.baffle_number_combobox.addItem("")
+        self.baffle_number_combobox.addItem("")
+        self.test_listview = QtWidgets.QListView(self.centralwidget)
+        self.test_listview.setGeometry(QtCore.QRect(30, 270, 256, 51))
+        self.test_listview.setStyleSheet("")
+        self.test_listview.setObjectName("test_listview")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 640, 21))
@@ -148,17 +165,28 @@ class Ui_MainWindow(object):
         self.menuSettings.addAction(self.actionSave)
         self.menuSettings.addAction(self.actionLoad_Previous_Config)
         self.menubar.addAction(self.menuSettings.menuAction())
+        self.number_baffles_label.setBuddy(self.baffle_number_combobox)
+        self.baffle_cost_label.setBuddy(self.baffle_cost_lineEdit)
+        self.tube_OD_label.setBuddy(self.tube_OD_combobox)
+        self.tube_material_label.setBuddy(self.tube_material_combobox)
+        self.total_tubing_label.setBuddy(self.total_tubing_lineEdit)
+        self.tubesheet_material_label.setBuddy(self.tubesheet_combobox)
+        self.tubesheet_diameter_label.setBuddy(self.tubesheet_diameter_combobox)
+        self.label.setBuddy(self.configurator_listview_3)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        MainWindow.setTabOrder(self.tubesheet_combobox, self.tube_material_combobox)
+        MainWindow.setTabOrder(self.tubesheet_combobox, self.tubesheet_diameter_combobox)
+        MainWindow.setTabOrder(self.tubesheet_diameter_combobox, self.tube_material_combobox)
         MainWindow.setTabOrder(self.tube_material_combobox, self.tube_OD_combobox)
-        MainWindow.setTabOrder(self.tube_OD_combobox, self.baffle_number_lineEdit)
-        MainWindow.setTabOrder(self.baffle_number_lineEdit, self.configurator_listview)
+        MainWindow.setTabOrder(self.tube_OD_combobox, self.total_tubing_lineEdit)
+        MainWindow.setTabOrder(self.total_tubing_lineEdit, self.baffle_number_combobox)
+        MainWindow.setTabOrder(self.baffle_number_combobox, self.baffle_cost_lineEdit)
+        MainWindow.setTabOrder(self.baffle_cost_lineEdit, self.pushButton)
+        MainWindow.setTabOrder(self.pushButton, self.textBrowser)
+        MainWindow.setTabOrder(self.textBrowser, self.configurator_listview)
         MainWindow.setTabOrder(self.configurator_listview, self.configurator_listview_2)
         MainWindow.setTabOrder(self.configurator_listview_2, self.configurator_listview_3)
-
-#Setting names and default text of fields
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -183,77 +211,91 @@ class Ui_MainWindow(object):
         self.tubesheet_combobox.setItemText(3, _translate("MainWindow", "Naval Brass"))
         self.tubesheet_combobox.setItemText(4, _translate("MainWindow", "Carbon Steel"))
         self.tubesheet_diameter_label.setText(_translate("MainWindow", "TubeSheet Diameter"))
-        self.tubesheet_diameter_lineEdit.setPlaceholderText(_translate("MainWindow", "#####"))
-        self.baffle_number_lineEdit.setPlaceholderText(_translate("MainWindow", "####"))
+        self.tubesheet_diameter_combobox.setItemText(0, _translate("MainWindow", "5\""))
+        self.tubesheet_diameter_combobox.setItemText(1, _translate("MainWindow", "6\""))
+        self.tubesheet_diameter_combobox.setItemText(2, _translate("MainWindow", "8\""))
+        self.tubesheet_diameter_combobox.setItemText(3, _translate("MainWindow", "10\""))
+        self.tubesheet_diameter_combobox.setItemText(4, _translate("MainWindow", "12\""))
+        self.tubesheet_diameter_combobox.setItemText(5, _translate("MainWindow", "14\""))
+        self.tubesheet_diameter_combobox.setItemText(6, _translate("MainWindow", "16\""))
+        self.tubesheet_diameter_combobox.setItemText(7, _translate("MainWindow", "18\""))
+        self.tubesheet_diameter_combobox.setItemText(8, _translate("MainWindow", "20\""))
+        self.tubesheet_diameter_combobox.setItemText(9, _translate("MainWindow", "22\""))
+        self.tubesheet_diameter_combobox.setItemText(10, _translate("MainWindow", "24\""))
         self.baffle_cost_lineEdit.setPlaceholderText(_translate("MainWindow", "$ ####.##"))
         self.label.setText(_translate("MainWindow", "Configuration:"))
         self.pushButton.setText(_translate("MainWindow", "Add Baffles"))
+        self.baffle_number_combobox.setItemText(0, _translate("MainWindow", "1"))
+        self.baffle_number_combobox.setItemText(1, _translate("MainWindow", "2"))
+        self.baffle_number_combobox.setItemText(2, _translate("MainWindow", "3"))
+        self.baffle_number_combobox.setItemText(3, _translate("MainWindow", "4"))
+        self.baffle_number_combobox.setItemText(4, _translate("MainWindow", "5"))
+        self.baffle_number_combobox.setItemText(5, _translate("MainWindow", "6"))
+        self.baffle_number_combobox.setItemText(6, _translate("MainWindow", "7"))
+        self.baffle_number_combobox.setItemText(7, _translate("MainWindow", "8"))
+        self.baffle_number_combobox.setItemText(8, _translate("MainWindow", "9"))
+        self.baffle_number_combobox.setItemText(9, _translate("MainWindow", "10"))
         self.menuSettings.setTitle(_translate("MainWindow", "Save/Load"))
         self.actionSave.setText(_translate("MainWindow", "Save"))
         self.actionLoad_Previous_Config.setText(_translate("MainWindow", "Load Previous Config"))
 
-        # connecting PushBotton action "clicked" to PushButton_add
+        ####################################################################################################
+
+        # connecting and setting variable for currentText comboboxes
+        self.baffle_number_combobox.currentIndexChanged.connect(get_baffle_number)
+
+        # connecting PushButton action "clicked" to function on_click
         self.pushButton.clicked.connect(on_click)
 
-#TODO: connecting lineEdits to Return/EnterPress signals
-        #self.baffle_number_lineEdit.returnPressed.connect(get_number_baffles())
-        #self.baffle_cost_lineEdit.connect(enterPress)
+        # connecting lineEdits to returnPressed() events and to their functions
+        # TODO connection works, need more functionality
+        self.baffle_cost_lineEdit.textEdited.connect(get_baffle_cost)
 
-    def calculate_baffle_cost(self):
-        pass
 
-    def get_baffles_cost():
-        pass
-
+#
 @pyqtSlot()
 def on_click(self):
+    print("test")
     woo = open(".\\text_browser1.txt", 'a')
-    woo.write("test")
+    calc_baffle_cost()
+    woo.write("test ")
     woo.close()
 
-
-def pushButton_add():
-    pass
+    # print_baffle_cost()
 
 
-def get_tube_OD():
-    pass
+# TODO get returnPressed() signal to connect to get_baffle_cost properly
+@pyqtSlot()
+def get_baffle_cost(text):
+    test_calc = text
+    print(test_calc)
+    # print("test2! ")
+    baffle_cost = test_calc
+    return baffle_cost
 
 
-def get_tubesheet_material():
-    pass
+# takes input from baffle_number_combobox
+def get_baffle_number(text):
+    test_calc = text
+    # print("test!")
+    baffle_number = test_calc + 1
+    # just a test print; not for use
+    print(baffle_number)
+    return baffle_number
 
 
-def add_tubesheet():
-    pass
+def calc_baffle_cost():
+    baffle_cost = get_baffle_cost()
+    # print(baffle_cost)
+    baffle_number = get_baffle_number()
+    # print(baffle_number)
+    test_total = (baffle_cost * baffle_number)
+    print("test2")
+    print(test_total)
 
 
-def choose_tube_material():
-    pass
-
-
-def get_number_baffles():
-    pass
-
-
-def get_number_gaskets():
-    pass
-
-
-def get_gasket_cost():
-    pass
-
-
-def get_tube_bundle_length():
-    pass
-
-
-def calc_net_price():
-    pass
-
-
-def calc_list_price():
-    pass
+def print_baffle_cost():
+    print(calc_baffle_cost())
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
@@ -264,11 +306,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
 
 def main():
-
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()
