@@ -1,8 +1,7 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import pyqtSlot
-
+from PyQt5.QtGui import QIcon, QValidator, QRegExpValidator
+from PyQt5.QtCore import pyqtSlot, QVariant
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -118,9 +117,14 @@ class Ui_MainWindow(object):
         self.tubesheet_diameter_combobox.addItem("")
         self.tubesheet_diameter_combobox.addItem("")
         self.tubesheet_diameter_combobox.addItem("")
+
+        # baffle_cost lineEdit options/config
         self.baffle_cost_lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.baffle_cost_lineEdit.setGeometry(QtCore.QRect(170, 230, 113, 20))
         self.baffle_cost_lineEdit.setObjectName("baffle_cost_lineEdit")
+
+
+
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(370, 500, 131, 20))
         self.label.setObjectName("label")
@@ -222,7 +226,7 @@ class Ui_MainWindow(object):
         self.tubesheet_diameter_combobox.setItemText(8, _translate("MainWindow", "20\""))
         self.tubesheet_diameter_combobox.setItemText(9, _translate("MainWindow", "22\""))
         self.tubesheet_diameter_combobox.setItemText(10, _translate("MainWindow", "24\""))
-        self.baffle_cost_lineEdit.setPlaceholderText(_translate("MainWindow", "$ ####.##"))
+        self.baffle_cost_lineEdit.setPlaceholderText(_translate("MainWindow", "999max"))
         self.label.setText(_translate("MainWindow", "Configuration:"))
         self.pushButton.setText(_translate("MainWindow", "Add Baffles"))
         self.baffle_number_combobox.setItemText(0, _translate("MainWindow", "1"))
@@ -241,61 +245,74 @@ class Ui_MainWindow(object):
 
         ####################################################################################################
 
-        # connecting and setting variable for currentText comboboxes
-        self.baffle_number_combobox.currentIndexChanged.connect(get_baffle_number)
+        # connecting comboboxes to their functions
+        self.baffle_number_combobox.currentIndexChanged['QString'].connect(get_baffle_number)
+        self.tubesheet_combobox.currentIndexChanged.connect(get_tubesheet_material)
 
-        # connecting PushButton action "clicked" to function on_click
+
+        # connecting PushButton action "clicked" to their functions
         self.pushButton.clicked.connect(on_click)
 
-        # connecting lineEdits to returnPressed() events and to their functions
+
+        # connecting lineEdits to their functions
         # TODO connection works, need more functionality
-        self.baffle_cost_lineEdit.textEdited.connect(get_baffle_cost)
+        self.baffle_cost_lineEdit.textChanged['QString'].connect(get_baffle_cost)
 
 
-#
+        # Sets an input mask to prevent any input over 999 for baffle_cost_lineEdit from user
+        self.baffle_cost_lineEdit.setInputMask('')
+        regexp = QtCore.QRegExp('^([1-9][0-9]{0,2}|1000)$')
+        validator = QtGui.QRegExpValidator(regexp)
+        self.baffle_cost_lineEdit.setValidator(validator)
+        self.baffle_cost_lineEdit.setCursorPosition(0)
+
+        # textBrowser append on lineEdit submission
+        self.textBrowser.append(self.baffle_cost_lineEdit.text())
+
+
+# potential color scheme for correct input in a lineEdit, optional fluff
+# @pyqtSlot()
+# def check_state(self, *args, **kwargs):
+#     sender = self.sender()
+#     validator = sender.validator()
+#     state = validator.validate(sender.text(), 0)[0]
+#     if state == QtGui.QValidator.Acceptable:
+#         color = '#c4df9b'  # green
+#     elif state == QtGui.QValidator.Intermediate:
+#         color = '#fff79a'  # yellow
+#     else:
+#         color = '#f6989d'  # red
+#     sender.setStyleSheet('QLineEdit { background-color: %s }' % color)
+
+
 @pyqtSlot()
-def on_click(self):
-    print("test")
-    woo = open(".\\text_browser1.txt", 'a')
-    calc_baffle_cost()
-    woo.write("test ")
-    woo.close()
-
-    # print_baffle_cost()
-
-
-# TODO get returnPressed() signal to connect to get_baffle_cost properly
-@pyqtSlot()
-def get_baffle_cost(text):
-    test_calc = text
-    print(test_calc)
-    # print("test2! ")
-    baffle_cost = test_calc
+def get_baffle_cost(cost):
+    baffle_cost = cost
+    # just a test print; not for use
+    print(baffle_cost)
     return baffle_cost
 
-
 # takes input from baffle_number_combobox
-def get_baffle_number(text):
-    test_calc = text
-    # print("test!")
-    baffle_number = test_calc + 1
+def get_baffle_number(number):
+    baffle_number = number
     # just a test print; not for use
-    print(baffle_number)
+    print(number)
     return baffle_number
 
+@pyqtSlot()
+def on_click(self):
+    print("on_click test")
+    # woo = open(".\\text_browser1.txt", 'a')
+    # woo.write("test ")
+    # woo.close()
+    # baffle_number = str(get_baffle_number())
+    # baffle_cost = str(get_baffle_cost())
+    # total = baffle_cost * baffle_number
+    # print(total)
 
-def calc_baffle_cost():
-    baffle_cost = get_baffle_cost()
-    # print(baffle_cost)
-    baffle_number = get_baffle_number()
-    # print(baffle_number)
-    test_total = (baffle_cost * baffle_number)
-    print("test2")
-    print(test_total)
 
-
-def print_baffle_cost():
-    print(calc_baffle_cost())
+def get_tubesheet_material(data):
+    print("tubesheet material test")
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
