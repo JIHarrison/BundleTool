@@ -4,6 +4,7 @@ from PyQt5.QtGui import QIcon, QValidator, QRegExpValidator, QActionEvent
 from PyQt5.QtCore import pyqtSlot, QVariant, QStringListModel, pyqtBoundSignal
 from PyQt5.QtWidgets import QInputDialog
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -119,13 +120,10 @@ class Ui_MainWindow(object):
         self.tubesheet_diameter_combobox.addItem("")
         self.tubesheet_diameter_combobox.addItem("")
 
-
         # baffle_cost lineEdit options/config
         self.baffle_cost_lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.baffle_cost_lineEdit.setGeometry(QtCore.QRect(170, 230, 113, 20))
         self.baffle_cost_lineEdit.setObjectName("baffle_cost_lineEdit")
-
-
 
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(370, 500, 131, 20))
@@ -175,7 +173,6 @@ class Ui_MainWindow(object):
         self.menuSettings.addAction(self.actionLoad_Previous_Config)
         self.menubar.addAction(self.menuSettings.menuAction())
 
-
         self.number_baffles_label.setBuddy(self.baffle_number_combobox)
         self.baffle_cost_label.setBuddy(self.baffle_cost_lineEdit)
         self.tube_OD_label.setBuddy(self.tube_OD_combobox)
@@ -198,7 +195,6 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.textBrowser, self.configurator_listview)
         MainWindow.setTabOrder(self.configurator_listview, self.configurator_listview_2)
         MainWindow.setTabOrder(self.configurator_listview_2, self.configurator_listview_3)
-
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -236,7 +232,7 @@ class Ui_MainWindow(object):
         self.tubesheet_diameter_combobox.setItemText(10, _translate("MainWindow", "24\""))
         self.baffle_cost_lineEdit.setPlaceholderText(_translate("MainWindow", "999max"))
         self.label.setText(_translate("MainWindow", "Configuration:"))
-        self.pushButton.setText(_translate("MainWindow", "Add Baffles"))
+        self.pushButton.setText(_translate("MainWindow", "Complete"))
         self.baffle_number_combobox.setItemText(0, _translate("MainWindow", "1"))
         self.baffle_number_combobox.setItemText(1, _translate("MainWindow", "2"))
         self.baffle_number_combobox.setItemText(2, _translate("MainWindow", "3"))
@@ -270,8 +266,8 @@ class Ui_MainWindow(object):
         # connecting lineEdits to their functions
         # TODO connection works, need more functionality
         self.baffle_cost_lineEdit.textChanged[str].connect(get_baffle_cost)
-        #self.baffle_cost_lineEdit.textEdited.connect(get_baffle_cost)
-        #self.baffle_cost_lineEdit.editingFinished.connect(get_baffle_cost)
+        # self.baffle_cost_lineEdit.textEdited.connect(get_baffle_cost)
+        # self.baffle_cost_lineEdit.editingFinished.connect(get_baffle_cost)
 
 
         # Sets an input mask to prevent any input over 999 for baffle_cost_lineEdit from user
@@ -303,6 +299,7 @@ class Ui_MainWindow(object):
     #     self.textEdit = QtGui.QTextEdit()
     #     self.setCentralWidget(self.textEdit)
 
+
 # potential color scheme for correct input in a lineEdit, optional fluff
 # @pyqtSlot()
 # def check_state(self, *args, **kwargs):
@@ -316,6 +313,24 @@ class Ui_MainWindow(object):
 #     else:
 #         color = '#f6989d'  # red
 #     sender.setStyleSheet('QLineEdit { background-color: %s }' % color)
+
+
+# populating lists/tuples to print at completion
+# TODO get each function call to populate its respective entry
+master_tup = ('TubeSheet Material', 'TubeSheet Diameter', 'Tube Material', 'Tube OD', 'Total Tubing (ft)',
+              'Number of Baffles', 'Cost of Baffles')
+tubesheet_material_tup = ('Copper', 'Nickel Plated', 'Copper-Nickel', 'Naval Brass', 'Carbon Steel',)
+tubesheet_diameter_tup = ('5"', '6"', '8"', '10"', '12"', '14"', '16"', '18"', '20"', '22"', '24"')
+tube_material_tup = ('copper', 'Copper-Nickel')
+tube_OD_tup = ('1/2"', '3/4"', '1 - 1/4"')
+number_of_baffles_tup = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10')
+
+final_list = []
+
+
+def test_listprint():
+    with open('./text_browser1.txt', 'w') as tp:
+        tp.write('\n'.join('{} {}'.format(x[0], x[1]) for x in master_tup))
 
 
 def get_tubesheet_material(tubesheet_material):
@@ -343,30 +358,30 @@ def get_baffle_number(number):
     print("baffle number test")
     print(number)
 
+
+def get_baffle_cost(cost):
+    # just a test print; not for use
+    print(cost)
+
+
 @pyqtSlot()
 def on_click(self):
     print("on_click test")
-    woo = open('./text_browser1.txt', 'a')
-    woo.write("test ")
-    QtGui.QGuiApplication.processEvents()
-    woo.close()
+    # woo = open('./text_browser1.txt', 'a')
+    # woo.write("test ")
+    # QtGui.QGuiApplication.processEvents()
+    # woo.close()
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
-
         super(ApplicationWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        QtGui.QGuiApplication.processEvents()
+
 
 if __name__ == "__main__":
-    def get_baffle_cost(cost):
-        # just a test print; not for use
-        print(cost)
-
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()
-
     sys.exit(app.exec_())
