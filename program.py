@@ -135,7 +135,8 @@ class Ui_MainWindow(object):
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
         self.textBrowser.setGeometry(QtCore.QRect(30, 330, 256, 192))
         self.textBrowser.setObjectName("textBrowser")
-        self.textBrowser.setSource(QtCore.QUrl("file:///C:/Users/jharrison/Documents/GitHub/BundleTool/text_browser1.txt"))
+        self.textBrowser.setSource(
+            QtCore.QUrl("file:///C:/Users/jharrison/Documents/GitHub/BundleTool/text_browser1.txt"))
         self.baffle_number_combobox = QtWidgets.QComboBox(self.centralwidget)
         self.baffle_number_combobox.setGeometry(QtCore.QRect(30, 230, 81, 22))
         self.baffle_number_combobox.setObjectName("baffle_number_combobox")
@@ -247,130 +248,113 @@ class Ui_MainWindow(object):
         self.actionSave.setText(_translate("MainWindow", "Save"))
         self.actionLoad_Previous_Config.setText(_translate("MainWindow", "Load Previous Config"))
 
-
         ####################################################################################################
 
-
         # connecting comboboxes to their functions
-        self.baffle_number_combobox.activated[str].connect(get_baffle_number)
-        self.tubesheet_combobox.activated[str].connect(get_tubesheet_material)
-        self.tubesheet_diameter_combobox.activated[str].connect(get_tubesheet_diameter)
-        self.tube_material_combobox.activated[str].connect(get_tube_material)
-        self.tube_OD_combobox.activated[str].connect(get_tube_OD)
+        self.baffle_number_combobox.activated[str].connect(self.get_baffle_number)
+        self.tubesheet_combobox.activated[str].connect(self.get_tubesheet_material)
+        self.tubesheet_diameter_combobox.activated[str].connect(self.get_tubesheet_diameter)
+        self.tube_material_combobox.activated[str].connect(self.get_tube_material)
+        self.tube_OD_combobox.activated[str].connect(self.get_tube_OD)
 
-
-        # connecting PushButton action "clicked" to their functions
-        self.pushButton.clicked.connect(on_click)
-
+        # connecting PushButtons to their functions
+        self.pushButton.clicked.connect(self.on_click)
 
         # connecting lineEdits to their functions
-        # TODO connection works, need more functionality
-        self.baffle_cost_lineEdit.textChanged[str].connect(get_baffle_cost)
+        # self.baffle_cost_lineEdit.textChanged[str].connect(get_baffle_cost)
         # self.baffle_cost_lineEdit.textEdited.connect(get_baffle_cost)
-        # self.baffle_cost_lineEdit.editingFinished.connect(get_baffle_cost)
+        self.baffle_cost_lineEdit.editingFinished.connect(self.get_baffle_cost)
 
-
-        # Sets an input mask to prevent any input over 999 for baffle_cost_lineEdit from user
+        # Sets an input mask and validator to prevent any input over 999 for baffle_cost_lineEdit from user
         self.baffle_cost_lineEdit.setInputMask('')
         regexp = QtCore.QRegExp('^([1-9][0-9]{0,2}|1000)$')
         validator = QtGui.QRegExpValidator(regexp)
         self.baffle_cost_lineEdit.setValidator(validator)
         self.baffle_cost_lineEdit.setCursorPosition(0)
 
+    def get_tubesheet_material(self):
+        final_list[0] = self.tubesheet_combobox.currentText()
+        config = open('./text_browser1.txt', 'w')
+        for items2, items1, in zip(final_list, master_tup):
+            config.write(items1 + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ("--- &nbsp; &nbsp; ") + items2 + ('<br>'))
+        config.close()
+        self.textBrowser.reload()
 
-        # TODO load/save functionality
-    #     self.actionLoad_Previous_Config.triggered.connect(self.file_open)
-    #     openFile = QtGui.QAction("&Open File", self)
-    #     openFile.setShortcut("Ctrl+O")
-    #     openFile.setStatusTip('Open File')
-    #     openFile.triggered.connect(self.file_open)
-    #
-    # def file_open(self):
-    #     name = QtGui.QFileDialog.getOpenFileName(self, 'Open File')
-    #     file = open(name, 'r')
-    #
-    #     self.editor()
-    #
-    #     with file:
-    #         text = file.read()
-    #         self.textEdit.setText(text)
-    #
-    # def editor(self):
-    #     self.textEdit = QtGui.QTextEdit()
-    #     self.setCentralWidget(self.textEdit)
+    def get_tubesheet_diameter(self):
+        final_list[1] = self.tubesheet_diameter_combobox.currentText()
+        config = open('./text_browser1.txt', 'w')
+        for items2, items1, in zip(final_list, master_tup):
+            config.write(
+                items1 + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + (
+                    "--- &nbsp; &nbsp; ") + items2 + ('<br>'))
+        config.close()
+        self.textBrowser.reload()
+
+    def get_tube_material(self):
+        final_list[2] = self.tube_material_combobox.currentText()
+        config = open('./text_browser1.txt', 'w')
+        for items2, items1, in zip(final_list, master_tup):
+            config.write(
+                items1 + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + (
+                    "--- &nbsp; &nbsp; ") + items2 + ('<br>'))
+        config.close()
+        self.textBrowser.reload()
+
+    def get_tube_OD(self):
+        final_list[3] = self.tube_OD_combobox.currentText()
+        config = open('./text_browser1.txt', 'w')
+        for items2, items1, in zip(final_list, master_tup):
+            config.write(
+                items1 + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + (
+                    "--- &nbsp; &nbsp; ") + items2 + ('<br>'))
+        config.close()
+        self.textBrowser.reload()
+
+    def get_baffle_number(self):
+        final_list[4] = self.baffle_number_combobox.currentText()
+        config = open('./text_browser1.txt', 'w')
+        for items2, items1, in zip(final_list, master_tup):
+            config.write(
+                items1 + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + (
+                    "--- &nbsp; &nbsp; ") + items2 + ('<br>'))
+        config.close()
+        self.textBrowser.reload()
+
+    def get_baffle_cost(self):
+        final_list[5] = self.baffle_cost_lineEdit.text()
+        config = open('./text_browser1.txt', 'w')
+        for items2, items1, in zip(final_list, master_tup):
+            config.write(
+                items1 + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + (
+                    "--- &nbsp; &nbsp; ") + items2 + ('<br>'))
+        config.close()
+        self.textBrowser.reload()
+
+    def on_click(self):
+        final_list[0] = self.tubesheet_combobox.currentText()
+        final_list[1] = self.tubesheet_diameter_combobox.currentText()
+        final_list[2] = self.tube_material_combobox.currentText()
+        final_list[3] = self.tube_OD_combobox.currentText()
+        final_list[4] = self.baffle_number_combobox.currentText()
+        final_list[5] = self.baffle_cost_lineEdit.text()
+        self.textBrowser.clear()
+        open('./text_browser1.txt', 'w').close()
+        config = open('./text_browser1.txt', 'a')
+        for items2, items1, in zip(final_list, master_tup):
+            config.write(items1 + ('&nbsp;') + ('&nbsp;')+ ('&nbsp;')+ ('&nbsp;')+ ('&nbsp;')+ ('&nbsp;')+ ('&nbsp;')+ ("--- &nbsp; &nbsp; ") + items2 + ('<br>'))
+            QtGui.QGuiApplication.processEvents()
+        config.close()
+        self.textBrowser.reload()
 
 
-# potential color scheme for correct input in a lineEdit, optional fluff
-# @pyqtSlot()
-# def check_state(self, *args, **kwargs):
-#     sender = self.sender()
-#     validator = sender.validator()
-#     state = validator.validate(sender.text(), 0)[0]
-#     if state == QtGui.QValidator.Acceptable:
-#         color = '#c4df9b'  # green
-#     elif state == QtGui.QValidator.Intermediate:
-#         color = '#fff79a'  # yellow
-#     else:
-#         color = '#f6989d'  # red
-#     sender.setStyleSheet('QLineEdit { background-color: %s }' % color)
-
-
-# populating lists/tuples to print at completion
-# TODO get each function call to populate its respective entry
-master_tup = ('TubeSheet Material', 'TubeSheet Diameter', 'Tube Material', 'Tube OD', 'Total Tubing (ft)',
-              'Number of Baffles', 'Cost of Baffles')
+master_tup = ('TubeSheet Material', 'TubeSheet Diameter', 'Tube Material', 'Tube OD', 'Number of Baffles', 'Cost of Baffles')
 tubesheet_material_tup = ('Copper', 'Nickel Plated', 'Copper-Nickel', 'Naval Brass', 'Carbon Steel',)
 tubesheet_diameter_tup = ('5"', '6"', '8"', '10"', '12"', '14"', '16"', '18"', '20"', '22"', '24"')
 tube_material_tup = ('copper', 'Copper-Nickel')
 tube_OD_tup = ('1/2"', '3/4"', '1 - 1/4"')
 number_of_baffles_tup = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10')
 
-final_list = []
-
-
-def test_listprint():
-    with open('./text_browser1.txt', 'w') as tp:
-        tp.write('\n'.join('{} {}'.format(x[0], x[1]) for x in master_tup))
-
-
-def get_tubesheet_material(tubesheet_material):
-    print("tubesheet material test")
-    print(tubesheet_material)
-
-
-def get_tubesheet_diameter(tubesheet_diameter):
-    print("tubesheet diameter test")
-    print(tubesheet_diameter)
-
-
-def get_tube_material(tube_material):
-    print("tube material test")
-    print(tube_material)
-
-
-def get_tube_OD(tube_OD):
-    print("tube OD test")
-    print(tube_OD)
-
-
-# takes input from baffle_number_combobox
-def get_baffle_number(number):
-    print("baffle number test")
-    print(number)
-
-
-def get_baffle_cost(cost):
-    # just a test print; not for use
-    print(cost)
-
-
-@pyqtSlot()
-def on_click(self):
-    print("on_click test")
-    # woo = open('./text_browser1.txt', 'a')
-    # woo.write("test ")
-    # QtGui.QGuiApplication.processEvents()
-    # woo.close()
+final_list = ["", "", "", "", "", ""]
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
@@ -379,8 +363,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-
 if __name__ == "__main__":
+    open('./text_browser1.txt', 'w').close()
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()
