@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>605</height>
+    <width>400</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>640</width>
-    <height>480</height>
+    <width>400</width>
+    <height>500</height>
    </size>
   </property>
   <property name="font">
@@ -30,16 +30,6 @@
    <enum>Qt::LeftToRight</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QListView" name="configurator_listview">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>20</y>
-      <width>256</width>
-      <height>231</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="number_baffles_label">
     <property name="geometry">
      <rect>
@@ -62,16 +52,6 @@
      <cstring>baffle_number_combobox</cstring>
     </property>
    </widget>
-   <widget class="QListView" name="configurator_listview_2">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>270</y>
-      <width>256</width>
-      <height>231</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="baffle_cost_label">
     <property name="geometry">
      <rect>
@@ -88,20 +68,10 @@
      </font>
     </property>
     <property name="text">
-     <string>Cost of Baffles</string>
+     <string>Cost Per Baffle</string>
     </property>
     <property name="buddy">
      <cstring>baffle_cost_lineEdit</cstring>
-    </property>
-   </widget>
-   <widget class="QListView" name="configurator_listview_3">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>520</y>
-      <width>256</width>
-      <height>31</height>
-     </rect>
     </property>
    </widget>
    <widget class="QGroupBox" name="tube_options_groupbox">
@@ -207,41 +177,6 @@
        <string>Copper-Nickel</string>
       </property>
      </item>
-    </widget>
-    <widget class="QLabel" name="total_tubing_label">
-     <property name="geometry">
-      <rect>
-       <x>240</x>
-       <y>10</y>
-       <width>101</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Total Tubing (ft)</string>
-     </property>
-     <property name="buddy">
-      <cstring>total_tubing_lineEdit</cstring>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="total_tubing_lineEdit">
-     <property name="geometry">
-      <rect>
-       <x>240</x>
-       <y>30</y>
-       <width>101</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="placeholderText">
-      <string>####</string>
-     </property>
     </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox">
@@ -411,23 +346,7 @@
      </rect>
     </property>
     <property name="placeholderText">
-     <string>$ ####.##</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>500</y>
-      <width>131</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Configuration:</string>
-    </property>
-    <property name="buddy">
-     <cstring>configurator_listview_3</cstring>
+     <string>max 999</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
@@ -516,26 +435,13 @@
      </property>
     </item>
    </widget>
-   <widget class="QListView" name="test_listview">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>270</y>
-      <width>256</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>640</width>
+     <width>400</width>
      <height>21</height>
     </rect>
    </property>
@@ -565,14 +471,10 @@
   <tabstop>tubesheet_diameter_combobox</tabstop>
   <tabstop>tube_material_combobox</tabstop>
   <tabstop>tube_OD_combobox</tabstop>
-  <tabstop>total_tubing_lineEdit</tabstop>
   <tabstop>baffle_number_combobox</tabstop>
   <tabstop>baffle_cost_lineEdit</tabstop>
   <tabstop>pushButton</tabstop>
   <tabstop>textBrowser</tabstop>
-  <tabstop>configurator_listview</tabstop>
-  <tabstop>configurator_listview_2</tabstop>
-  <tabstop>configurator_listview_3</tabstop>
  </tabstops>
  <resources/>
  <connections/>
