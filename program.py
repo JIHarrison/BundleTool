@@ -406,7 +406,6 @@ class Ui_MainWindow(object):
         self.single_double_combobox.activated[str].connect(self.get_single_double)
 
 
-
         # connecting PushButtons to their functions
         self.pushButton.clicked.connect(self.on_click)
 
@@ -518,7 +517,7 @@ class Ui_MainWindow(object):
         final_list[7] = self.overall_length_lineEdit.text()
         final_list[8] = self.single_double_combobox.currentText()
         final_list[9] = self.tubes_amount_lineEdit.text()
-        final_list[10] = self.overall_length_lineEdit.text()
+        final_list[10] = self.bends_amount_lineEdit.text()
         final_list[11] = self.baffle_number_combobox.currentText()
         final_list[12] = self.baffle_cost_lineEdit.text()
         self.textBrowser.clear()
