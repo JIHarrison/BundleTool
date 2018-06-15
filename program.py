@@ -1,5 +1,5 @@
-import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
+import sys, os
+from PyQt5 import QtCore, QtGui, QtWidgets, QtPrintSupport
 from PyQt5.QtGui import QIcon, QValidator, QRegExpValidator, QActionEvent
 from PyQt5.QtCore import pyqtSlot, QVariant, QStringListModel, pyqtBoundSignal
 
@@ -376,7 +376,6 @@ class Ui_MainWindow(object):
         self.tubeholes_label.setText(_translate("MainWindow", "# Tubeholes"))
         self.tubehole_combobox.setItemText(0, _translate("MainWindow", "5"))
 
-        self.label.setText(_translate("MainWindow", "Configuration:"))
         self.pushButton.setText(_translate("MainWindow", "Complete"))
         self.baffle_number_combobox.setItemText(0, _translate("MainWindow", "1"))
         self.baffle_number_combobox.setItemText(1, _translate("MainWindow", "2"))
@@ -522,7 +521,18 @@ class Ui_MainWindow(object):
         final_list[12] = self.baffle_cost_lineEdit.text()
         self.textBrowser.clear()
         write_options()
+# TODO get elements from lists to multiply in baffle_calc() and then append to textBrowser
+        #baffle_calc()
+        # appending totals after calculations to the textfile to later print
+        #write_total_options()
+
         self.textBrowser.reload()
+
+    def baffle_calc(self):
+        x_1 = final_list[11]
+        y_1 = final_list[12]
+        total_baffle = (x_1 * y_1)
+        return total_baffle
 
 # tuples for later use, modularability(if this isn't a word I made it one, deal with it)
 # this will possibly allow for someone to edit the script so they can dynamically add options for every field
@@ -532,8 +542,11 @@ tubesheet_diameter_tup = ('5"', '6"', '8"', '10"', '12"', '14"', '16"', '18"', '
 tube_material_tup = ('copper', 'Copper-Nickel')
 tube_OD_tup = ('1/2"', '3/4"', '1 - 1/4"')
 number_of_baffles_tup = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10')
+total_cost_tup = ('Baffle Cost:')
 
 final_list = ["", "", "", "", "", "", "", "", "", "", "", "", ""]
+total_cost_list = [""]
+
 
 
 def write_options():
@@ -541,6 +554,15 @@ def write_options():
     for items2, items1, in zip(final_list, master_tup):
         config.write(items1 + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ("--- &nbsp; &nbsp; ") + items2 + ('<br>'))
     config.close()
+
+def write_total_options():
+    config = open('./text_browser1.txt', 'a')
+    for items2, items1, in zip(total_cost_list, total_cost_tup):
+        config.write(items1 + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ("--- &nbsp; &nbsp; ") + items2 + ('<br>'))
+    config.close()
+
+def save_options():
+    pass
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
