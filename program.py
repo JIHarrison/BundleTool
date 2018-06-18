@@ -1,7 +1,27 @@
+from __future__ import print_function
 import sys, os
 from PyQt5 import QtCore, QtGui, QtWidgets, QtPrintSupport
 from PyQt5.QtGui import QIcon, QValidator, QRegExpValidator, QActionEvent
 from PyQt5.QtCore import pyqtSlot, QVariant, QStringListModel, pyqtBoundSignal
+import pandas as pd
+import numpy as np
+
+# tuples for later use, modularability(if this isn't a word I made it one, deal with it)
+# this will possibly allow for someone to edit the script so they can dynamically add options for every field
+master_tup = ('TubeSheet Material', 'TubeSheet Diameter', 'Bolt Circle', 'Number of Bolt Holes', '# Tubeholes', 'Tube Material', 'Tube OD', 'Overall Length', 'Single or Double Wall', '# of Tubes', '# of Bends', '# of Baffles', 'Cost of Baffles')
+tubesheet_material_tup = ('Copper', 'Nickel Plated', 'Copper-Nickel', 'Naval Brass', 'Carbon Steel',)
+tubesheet_diameter_tup = ('5"', '6"', '8"', '10"', '12"', '14"', '16"', '18"', '20"', '22"', '24"')
+tube_material_tup = ('copper', 'Copper-Nickel')
+tube_OD_tup = ('1/2"', '3/4"', '1 - 1/4"')
+number_of_baffles_tup = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10')
+
+final_list = ["", "", "", "", "", "", "", "", "", "", "", "", ""]
+
+#tubes_total =
+#tubesheet_total =
+#misc_total =
+#build_total =
+#engineer_redraw =
 
 
 class Ui_MainWindow(object):
@@ -520,33 +540,18 @@ class Ui_MainWindow(object):
         final_list[11] = self.baffle_number_combobox.currentText()
         final_list[12] = self.baffle_cost_lineEdit.text()
         self.textBrowser.clear()
+        # total_x_1 = final_list[11]
+        # total_x_1 = int(total_x_1)
+        # total_y_1 = final_list[12]
+        # total_y_1 = int(total_y_1)
+        # total_baffle = (total_x_1 * total_y_1)
+        # total_cost_list[0] = total_baffle
         write_options()
-# TODO get elements from lists to multiply in baffle_calc() and then append to textBrowser
-        #baffle_calc()
+
         # appending totals after calculations to the textfile to later print
-        #write_total_options()
-
+        write_final_options()
         self.textBrowser.reload()
-
-    def baffle_calc(self):
-        x_1 = final_list[11]
-        y_1 = final_list[12]
-        total_baffle = (x_1 * y_1)
-        return total_baffle
-
-# tuples for later use, modularability(if this isn't a word I made it one, deal with it)
-# this will possibly allow for someone to edit the script so they can dynamically add options for every field
-master_tup = ('TubeSheet Material', 'TubeSheet Diameter', 'Bolt Circle', 'Number of Bolt Holes', '# Tubeholes', 'Tube Material', 'Tube OD', 'Overall Length', 'Single or Double Wall', '# of Tubes', '# of Bends', '# of Baffles', 'Cost of Baffles')
-tubesheet_material_tup = ('Copper', 'Nickel Plated', 'Copper-Nickel', 'Naval Brass', 'Carbon Steel',)
-tubesheet_diameter_tup = ('5"', '6"', '8"', '10"', '12"', '14"', '16"', '18"', '20"', '22"', '24"')
-tube_material_tup = ('copper', 'Copper-Nickel')
-tube_OD_tup = ('1/2"', '3/4"', '1 - 1/4"')
-number_of_baffles_tup = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10')
-total_cost_tup = ('Baffle Cost:')
-
-final_list = ["", "", "", "", "", "", "", "", "", "", "", "", ""]
-total_cost_list = [""]
-
+        #print(total_cost_pd)
 
 
 def write_options():
@@ -555,11 +560,25 @@ def write_options():
         config.write(items1 + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ("--- &nbsp; &nbsp; ") + items2 + ('<br>'))
     config.close()
 
-def write_total_options():
-    config = open('./text_browser1.txt', 'a')
-    for items2, items1, in zip(total_cost_list, total_cost_tup):
-        config.write(items1 + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ("--- &nbsp; &nbsp; ") + items2 + ('<br>'))
-    config.close()
+
+def write_final_options():
+    with open('./text_browser.txt', 'w') as final_write:
+        for items2, items1, in zip(final_list, master_tup):
+            final_write.write(items1 + ("---") + items2)
+        final_write.close()
+    print(final_options)
+
+final_options = pd.read_csv('text_browser.txt', sep="---", header=None)
+
+
+# MailMerge method of combining a docx templated table with fillable fields for printing
+# def write_final_options():
+#     template = "./test-print.docx"
+#     document = MailMerge(template)
+#     first_test = [{'item1': str(master_tup[0]), 'tubesheet_qty': str(final_list[0]), 'tubesheet_cost': str(final_list[1]), 'tubesheet_total': str(final_list[2])}]
+#     document.merge_rows('item1', first_test)
+#     document.write('test-test-test.docx')
+
 
 def save_options():
     pass
