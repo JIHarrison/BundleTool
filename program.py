@@ -17,7 +17,7 @@ master_tup = ('TubeSheet Material', 'TubeSheet Diameter', 'Bolt Circle', 'Number
 
 final_list = ["", "", "", "", "", "", "", "", "", "", "", "", ""]
 
-misc_items = {'Tubesheet': [], 'Tubes': [], 'Baffles': [], 'Gaskets' :[], 'Gaskets': [], 'Studs': [], 'Hex Nuts':[], 'Redraw':[], 'Shop Hours': []}
+misc_items = {'Tubesheet': [], 'Tubes': [], 'Baffles': [], 'Gaskets1' :[], 'Gaskets': [], 'Studs': [], 'Hex Nuts':[], 'Redraw':[], 'Shop Hours': []}
 
 
 class Ui_MainWindow(object):
@@ -318,7 +318,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Replacement Bundle Pricing"))
-        self.number_baffles_label.setText(_translate("MainWindow", "Number of Baffles"))
+        self.number_baffles_label.setText(_translate("MainWindow", "# of Baffles"))
         self.baffle_cost_label.setText(_translate("MainWindow", "Cost Per Baffle"))
         self.tube_options_groupbox.setTitle(_translate("MainWindow", "Tube Options"))
         self.tube_OD_label.setText(_translate("MainWindow", "Tube OD"))
@@ -433,7 +433,7 @@ class Ui_MainWindow(object):
         # Sets input masks and validators with regular expressions(regex)
 
         self.overall_length_lineEdit.setInputMask('')
-        regexp = QtCore.QRegExp('^([1-9][0-9]{0,2}|1000)$')
+        regexp = QtCore.QRegExp('^([1-9][0-9]{0,2}|2000)$')
         validator = QtGui.QRegExpValidator(regexp)
         self.overall_length_lineEdit.setValidator(validator)
         self.overall_length_lineEdit.setCursorPosition(0)
@@ -537,13 +537,9 @@ class Ui_MainWindow(object):
         final_list[12] = self.baffle_cost_lineEdit.text()
         self.textBrowser.clear()
         write_options()
-
         # appending totals after calculations to the textfile to later print
         write_final_options()
         self.textBrowser.reload()
-        #print(total_cost_pd)
-
-#final_list_tup = namedtuple('totals', tubesheet_material)
 
 
 def write_options():
@@ -568,22 +564,26 @@ word_document_items_test = {key: value for (key, value) in zip(document_items_co
 
 word_document_items = [{
     'item': "Tubesheet",
-#these are fake for testing purposes
     'qty': '2',
-    'unit_cost': '9128377',
-    'item_total': '12981123'
+    'unit_cost': '350',
+    'item_total': '700'
 }, {
     'item': "Tubes ",
     'qty': '129',
-    'unit_cost': '01283',
-    'item_total': '123123'
+    'unit_cost': '5.77',
+    'item_total': '744.33'
+}, {
+    'item': "Baffles ",
+    'qty': '1',
+    'unit_cost': '126',
+    'item_total': '126'
 }]
 
 word_document_misc = [{
     'miscellaneous': 'Misc. Items',
-    'misc_qty': '213123',
-    'misc_cost': '1231211',
-    'misc_totals': '1'
+    'misc_qty': '2',
+    'misc_cost': '100',
+    'misc_totals': '200'
 }]
 
 # MailMerge method of combining a docx templated table with fillable fields for printing
@@ -851,11 +851,13 @@ class Ui_misc_Dialog(object):
         self.parts_number_label.setText(_translate("misc_Dialog", "Parts Numbers"))
         self.markup_label.setText(_translate("misc_Dialog", "Mark Up"))
 
+    def show_dialog(self):
+        self.appdiag = AppDiag()
+        self.appdiag.exec_()
+
 if __name__ == "__main__":
     open('./text_browser1.txt', 'w').close()
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()
-    appdiag = AppDiag()
-    appdiag.show()
     sys.exit(app.exec_())
