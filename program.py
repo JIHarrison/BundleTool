@@ -8,17 +8,20 @@ from misc_Dialog_ui import Ui_misc_Dialog
 
 # tuples for later use, modularability(if this isn't a word I made it one, deal with it)
 # this will possibly allow for someone to edit the script so they can dynamically add options for every field
-master_tup = ('TubeSheet Material', 'TubeSheet Diameter', 'Bolt Circle', 'Number of Bolt Holes', '# Tubeholes', 'Tube Material', 'Tube OD', 'Overall Length', 'Single or Double Wall', '# of Tubes', '# of Bends', '# of Baffles', 'Cost of Baffles')
-#tubesheet_material_tup = ('Copper', 'Nickel Plated', 'Copper-Nickel', 'Naval Brass', 'Carbon Steel',)
-#tubesheet_diameter_tup = ('5"', '6"', '8"', '10"', '12"', '14"', '16"', '18"', '20"', '22"', '24"')
-#tube_material_tup = ('copper', 'Copper-Nickel')
-#tube_OD_tup = ('1/2"', '3/4"', '1 - 1/4"')
-#number_of_baffles_tup = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10')
+master_tup = (
+'TubeSheet Material', 'TubeSheet Diameter', 'Bolt Circle', 'Number of Bolt Holes', '# Tubeholes', 'Tube Material',
+'Tube OD', 'Overall Length', 'Single or Double Wall', '# of Tubes', '# of Bends', '# of Baffles', 'Cost of Baffles')
+# tubesheet_material_tup = ('Copper', 'Nickel Plated', 'Copper-Nickel', 'Naval Brass', 'Carbon Steel',)
+# tubesheet_diameter_tup = ('5"', '6"', '8"', '10"', '12"', '14"', '16"', '18"', '20"', '22"', '24"')
+# tube_material_tup = ('copper', 'Copper-Nickel')
+# tube_OD_tup = ('1/2"', '3/4"', '1 - 1/4"')
+# number_of_baffles_tup = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10')
 
 final_list = ["", "", "", "", "", "", "", "", "", "", "", "", ""]
 
-misc_items = {'Tubesheet': [], 'Tubes': [], 'Baffles': [], 'Gaskets1' :[], 'Gaskets': [], 'Studs': [], 'Hex Nuts':[], 'Redraw':[], 'Shop Hours': []}
-
+#misc_items = {'Tubesheet': [tubesheet_final], 'Tubes': [], 'Baffles': [], 'Gaskets1': [], 'Gaskets': [], 'Studs': [], 'Hex Nuts': [],'Redraw': [], 'Shop Hours': []}
+#tubesheet_final = [tubesheet_qty, tubesheet_unit_cost, tubesheet_item_total]
+#tubes_final = [tubes_qty, tubes_unit_cost, tubes_item_total]
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -163,7 +166,7 @@ class Ui_MainWindow(object):
         self.tubesheet_diameter_combobox.addItem("")
         self.tubesheet_diameter_combobox.addItem("")
 
-# new tubesheet options
+        # new tubesheet options
 
         self.bolt_circle_label = QtWidgets.QLabel(self.groupBox)
         self.bolt_circle_label.setGeometry(QtCore.QRect(170, 20, 71, 21))
@@ -247,7 +250,7 @@ class Ui_MainWindow(object):
         self.tubeholes_label.setFont(font)
         self.tubeholes_label.setObjectName("tubeholes_label")
 
-# baffle_cost lineEdit options/config
+        # baffle_cost lineEdit options/config
         self.baffle_cost_lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.baffle_cost_lineEdit.setGeometry(QtCore.QRect(150, 290, 113, 20))
         self.baffle_cost_lineEdit.setObjectName("baffle_cost_lineEdit")
@@ -356,7 +359,7 @@ class Ui_MainWindow(object):
         self.tubesheet_diameter_combobox.setItemText(9, _translate("MainWindow", "22\""))
         self.tubesheet_diameter_combobox.setItemText(10, _translate("MainWindow", "24\""))
 
-# new tubesheet options
+        # new tubesheet options
 
         self.bolt_circle_label.setText(_translate("MainWindow", "Bolt Circle"))
         self.bolt_circle_combobox.setItemText(0, _translate("MainWindow", "13\""))
@@ -419,7 +422,6 @@ class Ui_MainWindow(object):
         self.bolt_hole_number_combobox.activated[str].connect(self.get_bolt_hole_number)
         self.tubehole_combobox.activated[str].connect(self.get_tubehole_number)
         self.single_double_combobox.activated[str].connect(self.get_single_double)
-
 
         # connecting PushButtons to their functions
         self.pushButton.clicked.connect(self.on_click)
@@ -521,7 +523,7 @@ class Ui_MainWindow(object):
         write_options()
         self.textBrowser.reload()
 
-    def on_click(self):
+    def get_final_list(self):
         final_list[0] = self.tubesheet_combobox.currentText()
         final_list[1] = self.tubesheet_diameter_combobox.currentText()
         final_list[2] = self.bolt_circle_combobox.currentText()
@@ -536,31 +538,26 @@ class Ui_MainWindow(object):
         final_list[11] = self.baffle_number_combobox.currentText()
         final_list[12] = self.baffle_cost_lineEdit.text()
         self.textBrowser.clear()
+
+    def on_click(self):
+        self.get_final_list()
         write_options()
         # appending totals after calculations to the textfile to later print
-        write_final_options()
+        #write_final_options()
         self.textBrowser.reload()
+        Ui_misc_Dialog.show_dialog(self)
 
 
 def write_options():
     config = open('./text_browser1.txt', 'w')
     for items2, items1, in zip(final_list, master_tup):
-        config.write(items1 + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ("--- &nbsp; &nbsp; ") + items2 + ('<br>'))
+        config.write(
+            items1 + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + ('&nbsp;') + (
+                "--- &nbsp; &nbsp; ") + items2 + ('<br>'))
     config.close()
 
 
 # MailMerge dictionary construction for printing to Word Document and calculations preparing for such
-
-item = 'itemslol'
-qty = 99
-unit_cost = 100
-item_total = (qty * unit_cost)
-
-document_items_construct1 = ['item', 'qty', 'unit_cost', 'item_total']
-document_items_construct2 = [item, qty, unit_cost, item_total]
-
-word_document_items_test = {key: value for (key, value) in zip(document_items_construct1, document_items_construct2)}
-
 
 word_document_items = [{
     'item': "Tubesheet",
@@ -586,6 +583,7 @@ word_document_misc = [{
     'misc_totals': '200'
 }]
 
+
 # MailMerge method of combining a docx templated table with fillable fields for printing
 # def write_final_options():
 #     template = "./test-print.docx"
@@ -606,8 +604,10 @@ def write_final_options():
     document.merge_rows('miscellaneous', word_document_misc)
     document.write('test-test-test.docx')
 
+
 def save_options():
     pass
+
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -615,11 +615,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+
 class AppDiag(QtWidgets.QDialog):
     def __init__(self):
         super(AppDiag, self).__init__()
         self.dialog = Ui_misc_Dialog()
         self.dialog.setupUi(self)
+
 
 # Popup dialog for miscellaneous inputs and parts numbers
 # TODO: Tie into main window with appropriate function calls
@@ -631,6 +633,7 @@ class Ui_misc_Dialog(object):
         self.buttonBox.setGeometry(QtCore.QRect(210, 450, 221, 41))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.buttonBox.setCenterButtons(False)
         self.buttonBox.setObjectName("buttonBox")
         self.gaskets_label = QtWidgets.QLabel(misc_Dialog)
         self.gaskets_label.setGeometry(QtCore.QRect(30, 160, 47, 13))
@@ -803,6 +806,20 @@ class Ui_misc_Dialog(object):
         self.label.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.label.setText("")
         self.label.setObjectName("label")
+        self.per_item_label = QtWidgets.QLabel(misc_Dialog)
+        self.per_item_label.setGeometry(QtCore.QRect(320, 10, 81, 16))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.per_item_label.setFont(font)
+        self.per_item_label.setObjectName("per_item_label")
+        self.total_cost_label = QtWidgets.QLabel(misc_Dialog)
+        self.total_cost_label.setGeometry(QtCore.QRect(330, 390, 71, 16))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.total_cost_label.setFont(font)
+        self.total_cost_label.setObjectName("total_cost_label")
 
         self.retranslateUi(misc_Dialog)
         self.buttonBox.accepted.connect(misc_Dialog.accept)
@@ -850,10 +867,113 @@ class Ui_misc_Dialog(object):
         self.tubes_label.setText(_translate("misc_Dialog", "Tubes"))
         self.parts_number_label.setText(_translate("misc_Dialog", "Parts Numbers"))
         self.markup_label.setText(_translate("misc_Dialog", "Mark Up"))
+        self.per_item_label.setText(_translate("misc_Dialog", "Cost Per Item"))
+        self.total_cost_label.setText(_translate("misc_Dialog", "Total Cost:"))
+
+        ########################################################################
+        # copy below before replacing designer generated code for entire class: Ui_misc_Dialog
+        ########################################################################
+
+        self.tubesheet_unit_cost_lineEdit.setInputMask('')
+        regexp = QtCore.QRegExp('^([1-9][0-9]{0,2}|1000)$')
+        validator = QtGui.QRegExpValidator(regexp)
+        self.tubesheet_unit_cost_lineEdit.setValidator(validator)
+        self.tubesheet_unit_cost_lineEdit.setCursorPosition(0)
+
+        # connections to functions
+        self.tubesheet_unit_cost_lineEdit.editingFinished.connect(self.set_tubesheet_unit_cost)
+        self.tubes_unit_cost_lineEdit.editingFinished.connect(self.set_tubes_unit_cost)
+        self.baffles_unit_cost_lineEdit.editingFinished.connect(self.set_baffles_unit_cost)
+        self.gaskets_unit_cost_lineEdit_1.editingFinished.connect(self.set_gaskets_unit_cost)
+        self.gaskets_unit_cost_lineEdit_2.editingFinished.connect(self.set_gaskets2_unit_cost)
+        self.studs_unit_cost_lineEdit.editingFinished.connect(self.set_studs_unit_cost)
+        self.hex_nuts_unit_cost_lineEdit.editingFinished.connect(self.set_hex_unit_cost)
+        self.redraw_cost_lineEdit.editingFinished.connect(self.set_redraw_unit_cost)
+        self.shop_hours_cost_lineEdit.editingFinished.connect(self.set_shop_hrs_unit_cost)
+
+        self.spinBox.editingFinished.connect(self.set_tubesheet_qty)
+        self.spinBox_2.editingFinished.connect(self.set_tubes_qty)
+        self.spinBox_3.editingFinished.connect(self.set_baffles_qty)
+        self.spinBox_4.editingFinished.connect(self.set_gaskets_qty)
+        self.spinBox_5.editingFinished.connect(self.set_gaskets2_qty)
+        self.spinBox_6.editingFinished.connect(self.set_studs_qty)
+        self.spinBox_7.editingFinished.connect(self.set_hex_qty)
+        self.spinBox_8.editingFinished.connect(self.set_redraw_qty)
+        self.spinBox_9.editingFinished.connect(self.set_shop_hrs_qty)
+        self.set_misc_total()
+
+    def set_tubesheet_qty(self):
+        item_qtys[0] = self.spinBox.text()
+
+    def set_tubes_qty(self):
+        item_qtys[1] = self.spinBox_2.text()
+
+    def set_baffles_qty(self):
+        item_qtys[2] = self.spinBox_3.text()
+
+    def set_gaskets_qty(self):
+        item_qtys[3] = self.spinBox_4.text()
+
+    def set_gaskets2_qty(self):
+        item_qtys[4] = self.spinBox_5.text()
+
+    def set_studs_qty(self):
+        item_qtys[5] = self.spinBox_6.text()
+
+    def set_hex_qty(self):
+        item_qtys[6] = self.spinBox_7.text()
+
+    def set_redraw_qty(self):
+        item_qtys[7] = self.spinBox_8.text()
+
+    def set_shop_hrs_qty(self):
+        item_qtys[8] = self.spinBox_9.text()
+
+    def set_tubesheet_unit_cost(self):
+        unit_costs[0] = self.tubesheet_unit_cost_lineEdit.text()
+
+    def set_tubes_unit_cost(self):
+        unit_costs[1] = self.tubes_unit_cost_lineEdit.text()
+
+    def set_baffles_unit_cost(self):
+        unit_costs[2] = self.baffles_unit_cost_lineEdit.text()
+
+    def set_gaskets_unit_cost(self):
+        unit_costs[3] = self.gaskets_unit_cost_lineEdit_1.text()
+
+    def set_gaskets2_unit_cost(self):
+        unit_costs[4] = self.gaskets_unit_cost_lineEdit_2.text()
+
+    def set_studs_unit_cost(self):
+        unit_costs[5] = self.studs_unit_cost_lineEdit.text()
+
+    def set_hex_unit_cost(self):
+        unit_costs[6] = self.hex_nuts_unit_cost_lineEdit.text()
+
+    def set_redraw_unit_cost(self):
+        unit_costs[7] = self.redraw_cost_lineEdit.text()
+
+    def set_shop_hrs_unit_cost(self):
+        unit_costs[8] = self.shop_hours_cost_lineEdit.text()
+
+    def set_misc_total(self):
+        self.label.setText(caclulate_total_costs)
+        self.label.update()
 
     def show_dialog(self):
         self.appdiag = AppDiag()
         self.appdiag.exec_()
+
+def caclulate_total_costs():
+    unit_costs_int = [int(x) for x in unit_costs]
+    item_qtys_int = [int(y) for y in item_qtys]
+    total_costs = [x * y for x, y in zip(unit_costs_int, item_qtys_int)]
+    print(total_costs)
+    return total_costs
+
+
+unit_costs = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+item_qtys = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 if __name__ == "__main__":
     open('./text_browser1.txt', 'w').close()
@@ -861,3 +981,4 @@ if __name__ == "__main__":
     application = ApplicationWindow()
     application.show()
     sys.exit(app.exec_())
+
