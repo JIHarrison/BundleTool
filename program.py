@@ -436,27 +436,22 @@ class Ui_MainWindow(object):
 
         # Sets input masks and validators with regular expressions(regex)
 
-        self.overall_length_lineEdit.setInputMask('')
         regexp = QtCore.QRegExp('^([1-9][0-9]{0,2}|1000)$')
         validator = QtGui.QRegExpValidator(regexp)
+
+        self.overall_length_lineEdit.setInputMask('')
         self.overall_length_lineEdit.setValidator(validator)
         self.overall_length_lineEdit.setCursorPosition(0)
 
         self.tubes_amount_lineEdit.setInputMask('')
-        regexp = QtCore.QRegExp('^([1-9][0-9]{0,2}|1000)$')
-        validator = QtGui.QRegExpValidator(regexp)
         self.tubes_amount_lineEdit.setValidator(validator)
         self.tubes_amount_lineEdit.setCursorPosition(0)
 
         self.bends_amount_lineEdit.setInputMask('')
-        regexp = QtCore.QRegExp('^([1-9][0-9]{0,2}|1000)$')
-        validator = QtGui.QRegExpValidator(regexp)
         self.bends_amount_lineEdit.setValidator(validator)
         self.bends_amount_lineEdit.setCursorPosition(0)
 
         self.baffle_cost_lineEdit.setInputMask('')
-        regexp = QtCore.QRegExp('^\$?[0-9]+\.?[0-9]?[0-9]?$')
-        validator = QtGui.QRegExpValidator(regexp)
         self.baffle_cost_lineEdit.setValidator(validator)
         self.baffle_cost_lineEdit.setCursorPosition(0)
 
@@ -599,24 +594,12 @@ def write_final_options():
 def save_options():
     pass
 
-
-class ApplicationWindow(QtWidgets.QMainWindow):
-    def __init__(self):
-        super(ApplicationWindow, self).__init__()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-
-
-class AppDiag(QtWidgets.QDialog):
-    def __init__(self):
-        super(AppDiag, self).__init__()
-        self.dialog = Ui_misc_Dialog()
-        self.dialog.setupUi(self)
-
-
-# Popup dialog for miscellaneous inputs and parts numbers
-# TODO: Tie into main window with appropriate function calls
 class Ui_misc_Dialog(object):
+
+    def show_dialog(self):
+        self.appdiag = AppDiag()
+        self.appdiag.exec_()
+
     def setupUi(self, misc_Dialog):
         misc_Dialog.setObjectName("misc_Dialog")
         misc_Dialog.resize(444, 755)
@@ -875,24 +858,24 @@ class Ui_misc_Dialog(object):
         self.misc_unit_cost_lineEdit = QtWidgets.QLineEdit(misc_Dialog)
         self.misc_unit_cost_lineEdit.setGeometry(QtCore.QRect(300, 310, 113, 20))
         self.misc_unit_cost_lineEdit.setObjectName("misc_unit_cost_lineEdit")
-        misc_Dialog.setCentralWidget(misc_Dialog)
-        self.menubar = QtWidgets.QMenuBar(misc_Dialog)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 444, 21))
-        self.menubar.setObjectName("menubar")
-        self.menuFile = QtWidgets.QMenu(self.menubar)
-        self.menuFile.setObjectName("menuFile")
-        misc_Dialog.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(misc_Dialog)
-        self.statusbar.setObjectName("statusbar")
-        misc_Dialog.setStatusBar(self.statusbar)
-        self.actionSave = QtWidgets.QAction(misc_Dialog)
-        self.actionSave.setObjectName("actionSave")
-        self.menuFile.addAction(self.actionSave)
-        self.menubar.addAction(self.menuFile.menuAction())
+        # misc_Dialog.setCentralWidget(misc_Dialog)
+        # self.menubar = QtWidgets.QMenuBar(misc_Dialog)
+        # self.menubar.setGeometry(QtCore.QRect(0, 0, 444, 21))
+        # self.menubar.setObjectName("menubar")
+        # self.menuFile = QtWidgets.QMenu(self.menubar)
+        # self.menuFile.setObjectName("menuFile")
+        # misc_Dialog.setMenuBar(self.menubar)
+        # self.statusbar = QtWidgets.QStatusBar(misc_Dialog)
+        # self.statusbar.setObjectName("statusbar")
+        # misc_Dialog.setStatusBar(self.statusbar)
+        # self.actionSave = QtWidgets.QAction(misc_Dialog)
+        # self.actionSave.setObjectName("actionSave")
+        # self.menuFile.addAction(self.actionSave)
+        # self.menubar.addAction(self.menuFile.menuAction())
 
-        self.actionExport_to_Excel = QtWidgets.QAction(misc_Dialog)
-        self.actionExport_to_Excel.setObjectName("actionExport_to_Excel")
-        self.menuFile.addAction(self.actionExport_to_Excel)
+        # self.actionExport_to_Excel = QtWidgets.QAction(misc_Dialog)
+        # self.actionExport_to_Excel.setObjectName("actionExport_to_Excel")
+        # self.menuFile.addAction(self.actionExport_to_Excel)
 
         self.retranslateUi(misc_Dialog)
         QtCore.QMetaObject.connectSlotsByName(misc_Dialog)
@@ -962,10 +945,10 @@ class Ui_misc_Dialog(object):
         self.markup_label_2.setText(_translate("misc_Dialog", "Mark Up"))
         self.misc_label.setText(_translate("misc_Dialog", "Miscellaneous"))
         self.misc_unit_cost_lineEdit.setText(_translate("misc_Dialog", "0.0"))
-        self.menuFile.setTitle(_translate("misc_Dialog", "File"))
-        self.actionSave.setText(_translate("misc_Dialog", "Save"))
-        self.actionSave.setShortcut(_translate("misc_Dialog", "Ctrl+S"))
-        self.actionExport_to_Excel.setText(_translate("misc_Dialog", "Export to Excel"))
+        # self.menuFile.setTitle(_translate("misc_Dialog", "File"))
+        # self.actionSave.setText(_translate("misc_Dialog", "Save"))
+        # self.actionSave.setShortcut(_translate("misc_Dialog", "Ctrl+S"))
+        # self.actionExport_to_Excel.setText(_translate("misc_Dialog", "Export to Excel"))
 
 
 
@@ -1010,8 +993,8 @@ class Ui_misc_Dialog(object):
         self.calculate_pushButton.clicked.connect(self.calculate_total_costs)
 
 
-        self.actionSave.triggered.connect(self.file_save)
-        self.actionExport_to_Excel.connect(self.excel_export)
+        # self.actionSave.triggered.connect(self.file_save)
+        # self.actionExport_to_Excel.connect(self.excel_export)
 
         # lineEdit validators restricting input to integers and 2 decimal places
         self.baffles_unit_cost_lineEdit.setInputMask('')
@@ -1025,20 +1008,20 @@ class Ui_misc_Dialog(object):
         self.redraw_cost_lineEdit.setInputMask('')
         self.shop_hours_cost_lineEdit.setInputMask('')
 
-        regexp = QtCore.QRegExp('^|[0-9]*(\.[0-9][0-9]?)?')
-        validator = QtGui.QRegExpValidator(regexp)
+        regexp2 = QtCore.QRegExp('^|[0-9]*(\.[0-9][0-9]?)?')
+        validator2 = QtGui.QRegExpValidator(regexp2)
 
-        self.baffles_unit_cost_lineEdit.setValidator(validator)
-        self.misc_unit_cost_lineEdit.setValidator(validator)
-        self.tubesheet_unit_cost_lineEdit.setValidator(validator)
-        self.tubes_unit_cost_lineEdit.setValidator(validator)
-        self.gaskets_unit_cost_lineEdit_1.setValidator(validator)
-        self.gaskets_unit_cost_lineEdit_2.setValidator(validator)
-        self.studs_unit_cost_lineEdit.setValidator(validator)
-        self.hex_nuts_unit_cost_lineEdit.setValidator(validator)
-        self.redraw_cost_lineEdit.setValidator(validator)
-        self.shop_hours_cost_lineEdit.setValidator(validator)
-        self.baffles_unit_cost_lineEdit.setValidator(validator)
+        self.baffles_unit_cost_lineEdit.setValidator(validator2)
+        self.misc_unit_cost_lineEdit.setValidator(validator2)
+        self.tubesheet_unit_cost_lineEdit.setValidator(validator2)
+        self.tubes_unit_cost_lineEdit.setValidator(validator2)
+        self.gaskets_unit_cost_lineEdit_1.setValidator(validator2)
+        self.gaskets_unit_cost_lineEdit_2.setValidator(validator2)
+        self.studs_unit_cost_lineEdit.setValidator(validator2)
+        self.hex_nuts_unit_cost_lineEdit.setValidator(validator2)
+        self.redraw_cost_lineEdit.setValidator(validator2)
+        self.shop_hours_cost_lineEdit.setValidator(validator2)
+        self.baffles_unit_cost_lineEdit.setValidator(validator2)
 
         self.baffles_unit_cost_lineEdit.setCursorPosition(0)
 
@@ -1192,9 +1175,24 @@ class Ui_misc_Dialog(object):
         df = pd.DataFrame(data, columns=['Estimate Number', 'Estimate Date', 'Tubesheet Material', 'Tube Material', 'Qty', 'Unit Cost', 'Total Cost'])
         print(df)
 
-    def show_dialog(self):
-        self.appdiag = AppDiag()
-        self.appdiag.exec_()
+
+class ApplicationWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(ApplicationWindow, self).__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+
+
+class AppDiag(QtWidgets.QDialog):
+    def __init__(self):
+        super(AppDiag, self).__init__()
+        self.dialog = Ui_misc_Dialog()
+        self.dialog.setupUi(self)
+
+
+# Popup dialog for miscellaneous inputs and parts numbers
+# TODO: Tie into main window with appropriate function calls
+
 
 parts_numbers = ["", "", "", "", "", "", ""]
 materials_cost = 0.0
