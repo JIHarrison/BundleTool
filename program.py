@@ -413,6 +413,8 @@ class Ui_MainWindow(object):
         self.actionLoad_Previous_Config.setText(_translate("MainWindow", "Load Previous Config"))
 
         ####################################################################################################
+        
+        self.actionSave.triggered.connect(Ui_misc_Dialog.file_save)
 
         # connecting comboboxes to their functions
         self.baffle_number_combobox.activated[str].connect(self.get_baffle_number)
