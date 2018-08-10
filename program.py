@@ -1,4 +1,3 @@
-from __future__ import print_function
 import sys, os
 from PyQt5 import QtCore, QtGui, QtWidgets, QtPrintSupport
 from PyQt5.QtGui import QIcon, QValidator, QRegExpValidator, QActionEvent
@@ -7,6 +6,8 @@ from mailmerge import MailMerge
 import itertools
 import pandas as pd
 import datetime
+
+final_list = ["", "", "", "", "", "", "", "", "", "", "", "", ""]
 
 # tuples for later use, modularability(if this isn't a word I made it one, deal with it)
 # this will possibly allow for someone to edit the script so they can dynamically add options for every field
@@ -19,12 +20,7 @@ master_tup = (
 # tube_OD_tup = ('1/2"', '3/4"', '1 - 1/4"')
 # number_of_baffles_tup = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10')
 
-final_list = ["", "", "", "", "", "", "", "", "", "", "", "", ""]
-
-#misc_items = {'Tubesheet': [tubesheet_final], 'Tubes': [], 'Baffles': [], 'Gaskets1': [], 'Gaskets': [], 'Studs': [], 'Hex Nuts': [],'Redraw': [], 'Shop Hours': []}
-#tubesheet_final = [tubesheet_qty, tubesheet_unit_cost, tubesheet_item_total]
-#tubes_final = [tubes_qty, tubes_unit_cost, tubes_item_total]
-
+# This class is the Main Window, its widgets, etc.
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -251,12 +247,9 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.tubeholes_label.setFont(font)
         self.tubeholes_label.setObjectName("tubeholes_label")
-
-        # baffle_cost lineEdit options/config
         self.baffle_cost_lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.baffle_cost_lineEdit.setGeometry(QtCore.QRect(150, 290, 113, 20))
         self.baffle_cost_lineEdit.setObjectName("baffle_cost_lineEdit")
-
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(370, 500, 131, 20))
         self.label.setObjectName("label")
@@ -301,6 +294,9 @@ class Ui_MainWindow(object):
         self.menuSettings.addAction(self.actionSave)
         self.menuSettings.addAction(self.actionLoad_Previous_Config)
         self.menubar.addAction(self.menuSettings.menuAction())
+        self.actionExport_to_Excel = QtWidgets.QAction(MainWindow)
+        self.actionExport_to_Excel.setObjectName("actionExport_to_Excel")
+        self.menuSettings.addAction(self.actionExport_to_Excel)
 
         self.number_baffles_label.setBuddy(self.baffle_number_combobox)
         self.baffle_cost_label.setBuddy(self.baffle_cost_lineEdit)
@@ -320,6 +316,7 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.pushButton, self.textBrowser)
         MainWindow.setTabOrder(self.textBrowser, self.tubesheet_combobox)
 
+    # this sets the names of buttons, labels, and everything else.
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Replacement Bundle Pricing"))
@@ -360,9 +357,6 @@ class Ui_MainWindow(object):
         self.tubesheet_diameter_combobox.setItemText(8, _translate("MainWindow", "20\""))
         self.tubesheet_diameter_combobox.setItemText(9, _translate("MainWindow", "22\""))
         self.tubesheet_diameter_combobox.setItemText(10, _translate("MainWindow", "24\""))
-
-        # new tubesheet options
-
         self.bolt_circle_label.setText(_translate("MainWindow", "Bolt Circle"))
         self.bolt_circle_combobox.setItemText(0, _translate("MainWindow", "13\""))
         self.bolt_holes_label.setText(_translate("MainWindow", "# Bolt Holes"))
@@ -411,6 +405,7 @@ class Ui_MainWindow(object):
         self.menuSettings.setTitle(_translate("MainWindow", "Save/Load"))
         self.actionSave.setText(_translate("MainWindow", "Save"))
         self.actionLoad_Previous_Config.setText(_translate("MainWindow", "Load Previous Config"))
+        self.actionExport_to_Excel.setText(_translate("MainWindow", "Export to Excel"))
 
         ####################################################################################################
         
@@ -457,6 +452,7 @@ class Ui_MainWindow(object):
         self.baffle_cost_lineEdit.setValidator(validator)
         self.baffle_cost_lineEdit.setCursorPosition(0)
 
+    # these set the list for each line edit and combo box when called, each one reloads the text browser to display the new value as well
     def get_tubesheet_material(self):
         final_list[0] = self.tubesheet_combobox.currentText()
         write_options()
@@ -555,49 +551,11 @@ def write_options():
                 "--- &nbsp; &nbsp; ") + items2 + ('<br>'))
     config.close()
 
-
 # MailMerge dictionary construction for printing to Word Document and calculations preparing for such
-
-word_document_items = [{
-    'item': "Tubesheet",
-    'qty': '2',
-    'unit_cost': '350',
-    'item_total': '700'
-}, {
-    'item': "Tubes ",
-    'qty': '129',
-    'unit_cost': '5.77',
-    'item_total': '744.33'
-}, {
-    'item': "Baffles ",
-    'qty': '1',
-    'unit_cost': '126',
-    'item_total': '126'
-}]
-
-word_document_misc = [{
-    'miscellaneous': 'Misc. Items',
-    'misc_qty': '2',
-    'misc_cost': '100',
-    'misc_totals': '200'
-}]
-
-def write_final_options():
-    template = "./test-print.docx"
-    document = MailMerge(template)
-    # word_document_items = word_document_items_test
-    # print(word_document_items)
-    print(document.get_merge_fields())
-    document.merge_rows('item', word_document_items)
-    document.merge_rows('miscellaneous', word_document_misc)
-    document.write('test-test-test.docx')
-
-
-def save_options():
-    pass
 
 class Ui_misc_Dialog(object):
 
+    # this creates an instance of the dialog when called
     def show_dialog(self):
         self.appdiag = AppDiag()
         self.appdiag.exec_()
@@ -860,6 +818,8 @@ class Ui_misc_Dialog(object):
         self.misc_unit_cost_lineEdit = QtWidgets.QLineEdit(misc_Dialog)
         self.misc_unit_cost_lineEdit.setGeometry(QtCore.QRect(300, 310, 113, 20))
         self.misc_unit_cost_lineEdit.setObjectName("misc_unit_cost_lineEdit")
+
+        # removed items when merged with the main project (they are only useable when the widget is the main window)
         # misc_Dialog.setCentralWidget(misc_Dialog)
         # self.menubar = QtWidgets.QMenuBar(misc_Dialog)
         # self.menubar.setGeometry(QtCore.QRect(0, 0, 444, 21))
@@ -875,9 +835,6 @@ class Ui_misc_Dialog(object):
         # self.menuFile.addAction(self.actionSave)
         # self.menubar.addAction(self.menuFile.menuAction())
 
-        # self.actionExport_to_Excel = QtWidgets.QAction(misc_Dialog)
-        # self.actionExport_to_Excel.setObjectName("actionExport_to_Excel")
-        # self.menuFile.addAction(self.actionExport_to_Excel)
 
         self.retranslateUi(misc_Dialog)
         QtCore.QMetaObject.connectSlotsByName(misc_Dialog)
@@ -950,7 +907,6 @@ class Ui_misc_Dialog(object):
         # self.menuFile.setTitle(_translate("misc_Dialog", "File"))
         # self.actionSave.setText(_translate("misc_Dialog", "Save"))
         # self.actionSave.setShortcut(_translate("misc_Dialog", "Ctrl+S"))
-        # self.actionExport_to_Excel.setText(_translate("misc_Dialog", "Export to Excel"))
 
 
 
@@ -1010,6 +966,7 @@ class Ui_misc_Dialog(object):
         self.redraw_cost_lineEdit.setInputMask('')
         self.shop_hours_cost_lineEdit.setInputMask('')
 
+        #regular expression doing aforementioned restriction of integers and decimal places
         regexp2 = QtCore.QRegExp('^|[0-9]*(\.[0-9][0-9]?)?')
         validator2 = QtGui.QRegExpValidator(regexp2)
 
@@ -1027,16 +984,21 @@ class Ui_misc_Dialog(object):
 
         self.baffles_unit_cost_lineEdit.setCursorPosition(0)
 
+    # loop creating a dictionary filled with all of the inputs from the fields needed to fill the mailmerge variables if
+    # a field happens to be empty, it is filled with "N/A" (such as parts numbers for fields with no parts numbers)
     def create_dicts(self, qty, cost, totals):
         docx_dict.clear()
         docx_dict.extend([{'item': i, 'parts_number': p, 'qty': q, 'unit_cost': c, 'total_cost': str(t)} for i, p, q, c, t in
          itertools.zip_longest(item, parts, qty, cost, totals, fillvalue='N/A')])
 
+    # this creates a list of values that are input to test-print.docx (a template for every save)
+    # the dictionary key is the corresponding variable in the word document
     def create_merge2(self, rep, list_price, markup, material_cost, redraw_eng_cost, markup_multiplier2):
         merge2.clear()
         date_time = datetime.date.today()
         merge2.update({'rep_cost': str(rep), 'list_price': str(list_price), 'markup': str(markup), 'materials_cost': str(material_cost), 'complete_cost':str(redraw_eng_cost), 'markup2':str(markup_multiplier2), 'date_time':str(date_time)})
 
+    # saves the aforementioned dictionaries (merge2 and docx_dict) and fields to the word document
     def write_final_options(self, name):
         template = "test-print.docx"
         document = MailMerge(template)
@@ -1048,6 +1010,7 @@ class Ui_misc_Dialog(object):
             document.write(name + '.docx')
         document.close()
 
+    # this creates a file save dialog window and passes the typed/input/selected file name to write_final_options as a string
     def file_save(self):
         name = QtWidgets.QFileDialog.getSaveFileName()
         self.write_final_options(str(name[0]))
@@ -1142,6 +1105,7 @@ class Ui_misc_Dialog(object):
     def set_hex_parts(self):
         parts_numbers[6] = self.part_number_lineEdit_7.text()
 
+    # this function does too much
     def costs_qtys(self):
         for x in unit_costs:
             if x == "":
@@ -1177,25 +1141,21 @@ class Ui_misc_Dialog(object):
         df = pd.DataFrame(data, columns=['Estimate Number', 'Estimate Date', 'Tubesheet Material', 'Tube Material', 'Qty', 'Unit Cost', 'Total Cost'])
         print(df)
 
-
+# this creates an instance of the above Main Window using the setup
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(ApplicationWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-
+# this creates an instance of misc_dialog as a new window
 class AppDiag(QtWidgets.QDialog):
     def __init__(self):
         super(AppDiag, self).__init__()
         self.dialog = Ui_misc_Dialog()
         self.dialog.setupUi(self)
 
-
-# Popup dialog for miscellaneous inputs and parts numbers
-# TODO: Tie into main window with appropriate function calls
-
-
+# dictionaries, lists, and variables set up to be used
 parts_numbers = ["", "", "", "", "", "", ""]
 materials_cost = 0.0
 unit_costs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
